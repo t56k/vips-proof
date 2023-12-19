@@ -1,0 +1,12 @@
+[package]
+name = "vips-proof"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.71"
+bytes = "1.5.0"
+clippy = "0.0.302"
+lazy_static = "1.4.0"
+libvips = "1.6.1"
+rust-s3 = { version = "0.34.0-rc3", features = ["blocking"] }
