@@ -8,10 +8,10 @@ use s3::request::ResponseData;
 
 lazy_static! {
     static ref BUCKET: &'static str = env!("BUCKET");
-    static ref IMAGE: &'static str = "05w9fe2o2wq8kqbzb8bvej1agoq7";
+    static ref IMAGE: &'static str = "image_attachments/data/000/033/392/medium/0bd9f3e582fb4e116a52f5bf920af7d4d959f52f-2310-FP-aim-high.jpg";
     static ref KEY: &'static str = env!("AWS_ACCESS_KEY_ID");
     static ref SECRET: &'static str = env!("AWS_SECRET_ACCESS_KEY");
-    static ref USER_IMAGE: &'static str = "05w9fe2o2wq8kqbzb8bvej1agoq7";
+    static ref USER_IMAGE: &'static str = "image_attachments/data/000/033/424/original/0da55414737ed2992d62f77ba1abf5207abbed21-scully.jpg";
 }
 
 pub fn get_bucket() -> Result<Bucket> {
@@ -24,6 +24,7 @@ pub fn get_bucket() -> Result<Bucket> {
 pub fn uri_to_bytes(key: &'static str) -> Result<Bytes> {
     let bucket = get_bucket()?;
     let res = bucket.get_object_blocking(key)?;
+    println!("download status: {}", res.status_code());
 
     Ok(res.bytes().clone())
 }
@@ -71,7 +72,7 @@ fn draw(original: &VipsImage, user_image: &VipsImage) -> Result<VipsImage> {
     let res = ops::insert(&source, &banner, 0, h as i32)?;
 
     let mut user_ink_vec = hex_to_rgb("#0055ff").unwrap();
-    user_ink_vec.push(100.0);
+    // user_ink_vec.push(100.0);
     
     let user_ink: &mut [f64] = &mut user_ink_vec;
     ops::draw_line(&res, user_ink, 0, h as i32, w as i32, h as i32)?;
